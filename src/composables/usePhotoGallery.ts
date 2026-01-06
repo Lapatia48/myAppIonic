@@ -1,0 +1,27 @@
+import { ref } from 'vue';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
+export const usePhotoGallery = () => {
+  const photos = ref<UserPhoto[]>([]);
+
+  const addNewToGallery = async () => {
+    // Take a photo
+    const capturedPhoto = await Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+      quality: 100,
+    });
+
+    return capturedPhoto;
+  };
+
+  return {
+    photos,
+    addNewToGallery,
+  };
+};
+
+export interface UserPhoto {
+  filepath: string;
+  webviewPath?: string;
+}
