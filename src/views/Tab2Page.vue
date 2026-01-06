@@ -12,6 +12,22 @@
         </ion-toolbar>
       </ion-header>
 
+      <!-- Gallery Grid -->
+      <div class="gallery-container">
+        <div v-if="photos.length === 0" class="empty-state">
+          <p>Gallerie vide</p>
+        </div>
+        <div v-else class="gallery-grid">
+          <div v-for="photo in photos" :key="photo.filepath" class="gallery-item">
+            <img 
+              :src="photo.webviewPath" 
+              :alt="photo.filepath"
+              class="gallery-image"
+            />
+          </div>
+        </div>
+      </div>
+
       <!-- Floating Action Button for Camera -->
       <ion-fab vertical="bottom" horizontal="center" slot="fixed">
         <ion-fab-button @click="addNewToGallery()">
@@ -24,7 +40,6 @@
 
 <script setup lang="ts">
 import { camera } from 'ionicons/icons';
-
 import {
   IonPage,
   IonHeader,
@@ -35,15 +50,14 @@ import {
   IonFabButton,
   IonIcon,
 } from '@ionic/vue';
-
 import { usePhotoGallery } from '@/composables/usePhotoGallery';
 
-const { addNewToGallery } = usePhotoGallery();
+const { photos, addNewToGallery } = usePhotoGallery();
 </script>
 
 <style scoped>
 .gallery-container {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #000000 0%, #000000 100%);
   min-height: 100vh;
   padding: 16px;
 }
@@ -56,6 +70,7 @@ const { addNewToGallery } = usePhotoGallery();
   color: white;
   font-size: 18px;
   text-align: center;
+  padding: 20px;
 }
 
 .gallery-grid {
